@@ -1,0 +1,1452 @@
+<html><head>
+<meta http-equiv="content-type" content="text/html; charset=windows-1252"><meta http-equiv="expires" content="0">
+
+
+
+<style type="text/css">
+table {font-size: 100%;}
+</style>
+</head>
+
+<body vlink="#f00000" text="#000000" link="#00ff00" bgcolor="#ffffff">
+
+<h3>
+<hr>
+The <i>R</i>-tree (Region-tree)
+<hr>
+</h3>
+<ul>
+<p>
+
+</p><li> <font color="darkmagenta"><b>
+     Bounding Box (BB)
+     </b></font>
+<p>
+</p><ul>
+<li> <b>Bounding Box:</b>
+<p>
+</p><ul>
+<table border="5" bgcolor="lightyellow">
+<tbody><tr> <td>
+
+ <ul>
+ <li> <font color="blue"><b>Bounding Box</b></font> =
+      a <font color="red"><b> rectangle</b></font> that
+      <b>contains</b>
+      a <font color="blue"><b>group</b></font> of
+      <font color="red"><b>objects</b></font>
+ </li></ul>
+
+</td> </tr>
+</tbody></table>
+</ul>
+<p>
+</p><hr>
+<p>
+</p></li><li> <b>Example:</b>
+<p>
+</p><ul>
+<table width="800" border="5" bgcolor="#FFEEEE">
+<tbody><tr> <td>
+
+ <ul>
+ <li> A <font color="blue"><b>group</b></font> of
+          <font color="red"><b>objects</b></font>:
+<p>
+</p><ul>
+<table border="5">
+
+<tbody><tr> <td>
+<img src="R-tree_files/R-tree01.gif">
+</td> </tr>
+
+</tbody></table>
+</ul>
+<p>
+</p><hr>
+<p>
+</p></li><li> A <font color="red"><b>Bounding Box</b></font>:
+<p>
+</p><ul>
+<table border="5">
+
+<tbody><tr> <td>
+<img src="R-tree_files/R-tree01d.gif">
+</td> </tr>
+
+</tbody></table>
+</ul>
+<p>
+
+ </p></li></ul>
+
+</td> </tr>
+</tbody></table>
+</ul>
+<p>
+
+</p></li></ul>
+
+<p>
+</p><hr>
+<hr>
+<hr>
+<hr>
+<p>
+</p></li><li> <font color="darkmagenta"><b>
+     Minimum Bounding Box (MBB)
+     </b></font>
+<p>
+</p><ul>
+<li> <b>Minimum Bounding Box:</b>
+<p>
+</p><ul>
+<table border="5" bgcolor="lightyellow">
+<tbody><tr> <td>
+
+ <ul>
+ <li> <font color="blue"><b>Minimum Bounding Box</b></font> =
+      the <font color="red"><b><i>smallest</i> rectangle</b></font> that
+      <b>contains</b>
+      a <font color="blue"><b>group</b></font> of
+      <font color="red"><b>objects</b></font>
+ </li></ul>
+
+</td> </tr>
+</tbody></table>
+</ul>
+<p>
+</p><hr>
+<p>
+</p></li><li> <b>Example:</b>
+<p>
+</p><ul>
+<table border="5" bgcolor="lightcyan">
+<tbody><tr> <td>
+
+ <ul>
+ <li> A <font color="blue"><b>group</b></font> of
+      <font color="red"><b>objects</b></font>:
+<p>
+</p><ul>
+<table border="5">
+
+<tbody><tr> <td>
+<img src="R-tree_files/R-tree01.gif">
+</td> </tr>
+
+</tbody></table>
+</ul>
+<p>
+</p><hr>
+<p>
+</p></li><li> The <font color="red"><b>Minimum Bounding Box</b></font>:
+<p>
+</p><ul>
+<table border="5">
+
+<tbody><tr> <td>
+<img src="R-tree_files/R-tree01b.gif">
+</td> </tr>
+
+</tbody></table>
+</ul>
+<p>
+
+ </p></li></ul>
+
+</td> </tr>
+</tbody></table>
+</ul>
+<p>
+</p><hr>
+<hr>
+<p>
+</p></li><li> <b>Note:</b>
+<p>
+</p><ul>
+<table border="5" bgcolor="#FFEEEE">
+<tbody><tr> <td>
+
+ <ul>
+ <li> A <font color="blue"><b>rectangle</b></font>
+       can be <font color="red"><b>represented</b></font> as
+       <b>follows</b>:
+<p>
+</p><ul>
+<table border="5" bgcolor="lightyellow">
+<tbody><tr> <td>
+
+<font color="blue">
+<b>
+<pre>   Rectangle:  <font color="red">coordinate of the lower left corner</font> 
+               <font color="red">coordinate of the upper right corner</font>   
+</pre>
+</b>
+</font>
+
+</td> </tr>
+</tbody></table>
+</ul>
+<p>
+<b>Example:</b>
+</p><p>
+</p><ul>
+<table border="5">
+
+<tbody><tr> <td>
+<img src="R-tree_files/R-tree01c.gif">
+</td> </tr>
+
+</tbody></table>
+</ul>
+<p>
+
+ </p></li></ul>
+
+</td> </tr>
+</tbody></table>
+</ul>
+<p>
+
+</p></li></ul>
+<p>
+</p><hr>
+<hr>
+<hr>
+<hr>
+<p>
+
+</p></li><li> <font color="darkmagenta"><b>
+     R-tree
+     </b></font>
+<p>
+ </p><ul>
+ <li> <b>R-tree:</b>
+<p>
+</p><ul>
+<table border="5" bgcolor="lightyellow">
+<tbody><tr> <td>
+
+ <ul>
+ <li> <font color="blue"><b>R-tree</b></font> =
+        an <b>index tree-structure</b>
+	derived from
+	the <font color="red"><b>B-tree</b></font>
+	that uses <font color="blue"><b>multi-dimensional indexes</b></font>
+<p>
+</p><hr>
+<p>
+</p></li><li> The <font color="blue"><b><i>internal</i> nodes</b></font> contains
+     a <b>number </b> of entries of the
+     follwoing <font color="red"><b>format</b></font>:
+<p>
+</p><ul>
+<table border="5">
+
+<tbody><tr> <td>
+<img src="R-tree_files/R-tree02.gif">
+</td> </tr>
+
+</tbody></table>
+</ul>
+<p>
+</p><hr>
+<p>
+</p></li><li> The <font color="blue"><b><i>leaf</i> nodes</b></font> contains
+     a <b>number </b> of entries of the
+     follwoing <font color="red"><b>format</b></font>:
+<p>
+</p><ul>
+<table border="5">
+
+<tbody><tr> <td>
+<img src="R-tree_files/R-tree02b.gif">
+</td> </tr>
+
+</tbody></table>
+</ul>
+<p>
+ </p></li></ul>
+
+</td> </tr>
+</tbody></table>
+</ul>
+<p>
+</p><hr>
+<p>
+</p></li><li> <b>Property</b> of a <font color="red"><b><i>R</i>-tree</b></font>:
+<p>
+</p><ul>
+<table border="5">
+
+<tbody><tr> <td>
+<img src="R-tree_files/R-tree03.gif">
+</td> </tr>
+
+</tbody></table>
+</ul>
+<p>
+</p><hr>
+<hr>
+<p>
+</p></li><li> <b>Example:</b> <font color="red"><b><i>R</i>-tree</b></font>
+<p>
+</p><ul>
+<table border="5" bgcolor="lightcyan">
+<tbody><tr> <td>
+
+ <ul>
+ <li> <b>Objects</b> that we want to
+      <font color="red"><b>represent</b></font>:
+<p>
+</p><ul>
+<table border="5">
+
+<tbody><tr> <td>
+<img src="R-tree_files/R-tree05.gif">
+</td> </tr>
+
+</tbody></table>
+</ul>
+<p>
+</p><hr>
+<hr>
+<p>
+</p></li><li> The <font color="blue"><b>objects</b></font>:
+<p>
+</p><ul>
+<table border="5" bgcolor="lightyellow">
+<tbody><tr> <td>
+
+ <ul>
+ <li> <font color="blue"><b>house1</b></font>,
+<font color="blue"><b>road1</b></font> and
+<font color="blue"><b>road2</b></font>
+ </li></ul>
+
+</td> </tr>
+</tbody></table>
+</ul>
+<p>
+ are
+     <font color="red"><b><i>completely</i> enclosed</b></font> by the
+     <font color="blue"><b>bounding box 
+     <font color="red">((0,0),(60,50)</font></b></font>:
+</p><p>
+</p><ul>
+<table border="5">
+
+<tbody><tr> <td>
+<img src="R-tree_files/R-tree05b.gif">
+</td> </tr>
+
+</tbody></table>
+</ul>
+<p>
+</p><hr>
+<p>
+</p></li><li> The <font color="blue"><b>objects</b></font>:
+<p>
+</p><ul>
+<table border="5" bgcolor="lightyellow">
+<tbody><tr> <td>
+
+ <ul>
+ <li> <font color="blue"><b>school</b></font>,
+<font color="red"><b>pop</b></font> ,
+<font color="blue"><b>house2</b></font>
+and
+<font color="blue"><b>pipeline</b></font>
+ </li></ul>
+
+</td> </tr>
+</tbody></table>
+</ul>
+<p>
+ are
+     <font color="red"><b><i>completely</i> enclosed</b></font> by the
+     <font color="blue"><b>bounding box
+    <font color="red">((20,20),(100,80)</font></b></font>:
+</p><p>
+</p><ul>
+<table border="5">
+
+<tbody><tr> <td>
+<img src="R-tree_files/R-tree05c.gif">
+</td> </tr>
+
+</tbody></table>
+</ul>
+<p>
+</p><hr>
+<hr>
+<p>
+</p></li><li> Here is a <font color="blue"><b><i>R</i>-tree</b></font> that uses
+    the <font color="red"><b>bounding boxes</b></font> above:
+<p>
+</p><ul>
+<table border="5">
+
+<tbody><tr> <td>
+<img src="R-tree_files/R-tree05d.gif">
+</td> </tr>
+
+</tbody></table>
+</ul>
+<p>
+
+</p><p>
+ </p></li></ul>
+
+</td> </tr>
+</tbody></table>
+</ul>
+<p>
+</p><hr>
+<hr>
+<p>
+</p></li><li> <b>Note:</b>
+<p>
+</p><ul>
+<table border="5" bgcolor="lightyellow">
+<tbody><tr> <td>
+
+ <ul>
+ <li> The <font color="red"><b>bounding boxes</b></font> used in
+      <font color="blue"><b><i>R</i>-tree nodes</b></font> can
+      <font color="red"><b><i>overlap</i></b></font> !!!
+ </li></ul>
+
+</td> </tr>
+</tbody></table>
+</ul>
+<p>
+
+ </p></li></ul>
+<p>
+</p><hr>
+<hr>
+<hr>
+<hr>
+<p>
+</p></li><li> <font color="darkmagenta"><b>
+     Lookup algorithm for a <i>point</i> in an <i>R</i>-tree
+     </b></font>
+<p>
+</p><ul>
+<li> <b>Search Algorithm</b> for a <font color="red"><b>Point(x,y)</b></font>:
+<p>
+</p><p>
+</p><ul>
+<table border="5" bgcolor="lightcyan">
+<tbody><tr> <td>
+
+ <ul>
+ <li> The <font color="blue"><b>search algorithm </b></font> is
+       <font color="red"><b><i>recursive</i></b></font>
+<p>
+</p><hr>
+<p>
+</p></li><li> The <b>search</b> starts at the
+    <font color="red"><b><i>root</i> node</b></font> of
+    the <font color="blue"><b><i>R</i>-tree</b></font>
+ </li></ul>
+
+</td> </tr>
+</tbody></table>
+</ul>
+<p>
+</p><hr>
+<p>
+</p></li><li> <b>Recursive search algorithm</b> for
+     a <font color="red"><b>Point P(x,y)</b></font> when the
+     <b>current node</b> is
+     <font color="blue"><b>n</b></font>:
+<p>
+</p><ul>
+<table border="5" bgcolor="#FFEEEE">
+<tbody><tr> <td>
+
+<font color="blue">
+<b>
+<pre>     <font color="darkgreen">/* ================================================
+        Lookup( <font color="red">(x,y)</font>, <font color="blue">n</font>, <font color="magenta">result</font> )
+
+            (x,y)  = coordinate of a point
+	    <font color="blue">n</font>      = current node of search
+	    <font color="magenta">result</font> = output 
+        ================================================= */</font>
+     Lookup( <font color="red">(x, y)</font>, <font color="blue">n</font>, <font color="magenta">result</font> )
+     {
+        // <font color="red">n</font> = <font color="red">current node</font> of the search in the R-tree
+
+	if ( <font color="red">n == internal node</font> )
+	{
+	   for ( <font color="red">each entry</font> ( BB,  <span style="BACKGROUND-COLOR: yellow"><font color="magenta">childptr</font></span> ) in node<font color="red"> n</font> ) do         
+	   {<font color="darkgreen">
+	      /* ====================================
+	         Look in subtree if (x,y) is in box
+		 ==================================== */</font>
+	      if ( <font color="red">(x,y) &#8712; BB</font> )
+	      {
+	         Lookup( (x,y),  <span style="BACKGROUND-COLOR: yellow"><font color="magenta">childptr</font></span>, <font color="magenta">result</font>);
+              }
+           }
+	}
+	else
+	{
+	   for ( <font color="red">each object Ob</font> in node <font color="red">n</font> ) do
+	   {
+	      if ( <font color="red">(x,y) &#8712; MBB(Ob)</font> )
+	      {
+	         <font color="red">Add Ob</font> to <font color="magenta">result</font>;
+              }
+        }
+     }
+</pre>
+</b>
+</font>
+
+</td> </tr>
+</tbody></table>
+</ul>
+<p>
+</p><hr>
+<hr>
+<p>
+</p></li><li> <b>Example:</b>
+      Find the <font color="blue"><b>object(s)</b></font> that contain
+     the <font color="red"><b>point P(40,75)</b></font>:
+<p>
+</p><ul>
+<table border="5">
+
+<tbody><tr> <td>
+<img src="R-tree_files/R-tree06.gif">
+</td> </tr>
+
+</tbody></table>
+</ul>
+<p>
+<b>Result:</b>
+</p><p>
+</p><ul>
+<table border="5" bgcolor="lightcyan">
+<tbody><tr> <td>
+
+ <ul>
+ <li> Because:
+<p>
+</p><ul>
+<table border="5" bgcolor="lightyellow">
+<tbody><tr> <td>
+
+ <ul>
+ <li>  <font color="red"><b>point P(40,75)</b></font>
+     <b>&#8713;</b>
+     bounding box <font color="blue"><b>((0,0),(60,50))</b></font> 
+   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <b>and</b>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+ </li><li>  <font color="red"><b>point P(40,75)</b></font>
+     <b>&#8712;</b>
+     bounding box <font color="blue"><b>((20,20),(100,80))</b></font> 
+ </li></ul>
+
+</td> </tr>
+</tbody></table>
+</ul>
+<p>
+we <font color="red"><b><i>only</i></b></font> search the 
+   <font color="blue"><b>2nd subtree</b></font>:
+</p><p>
+</p><ul>
+<table border="5">
+
+<tbody><tr> <td>
+<img src="R-tree_files/R-tree06b.gif">
+</td> </tr>
+
+</tbody></table>
+</ul>
+<p>
+</p><hr>
+<hr>
+<p>
+</p></li><li> By <font color="blue"><b>searching</b></font> the
+    <font color="red"><b>MBB information</b></font> in
+    the <font color="blue"><b>leaf node</b></font>,
+    we will be able to
+    find the
+    <font color="red"><b>school</b></font> object:
+<p>
+</p><ul>
+<table border="5">
+
+<tbody><tr> <td>
+<img src="R-tree_files/R-tree06c.gif">
+</td> </tr>
+
+</tbody></table>
+</ul>
+<p>
+    
+     
+     
+ </p></li></ul>
+
+</td> </tr>
+</tbody></table>
+</ul>
+<p>
+
+</p></li></ul>
+<p>
+</p><hr>
+<hr>
+<hr>
+<hr>
+<p>
+</p></li><li> <font color="darkmagenta"><b>
+     Lookup algorithm for an <i>object</i> in the <i>R</i>-tree
+     </b></font>
+<p>
+</p><ul>
+<li> <b>Simplification:</b>
+<p>
+</p><ul>
+<table border="5" bgcolor="lightyellow">
+<tbody><tr> <td>
+
+ <ul>
+ <li> We <font color="blue"><b>represent</b></font> an
+        <b>object</b> by its
+	<font color="red"><b><i>Minimum</i> Bounding Box</b></font>
+<p>
+<b>Example:</b>
+</p><p>
+</p><ul>
+<table border="5">
+
+<tbody><tr> <td>
+<img src="R-tree_files/R-tree07.gif">
+</td> </tr>
+
+</tbody></table>
+</ul>
+<p>
+
+ </p></li></ul>
+
+</td> </tr>
+</tbody></table>
+</ul>
+<p>
+</p><hr>
+<hr>
+<p>
+</p></li><li> <font color="blue"><b>Containment relationship</b></font> of
+        <font color="red"><b>bounding boxes</b></font>:
+<p>
+</p><ul>
+<table border="5" bgcolor="#FFEEEE">
+<tbody><tr> <td>
+
+ <ul>
+ <li> A <font color="blue"><b>bounding box A</b></font> is
+      <b>contained</b> in a 
+      <font color="red"><b>bounding box B</b></font> iff:
+<p>
+</p><ul>
+<table border="5" bgcolor="lightyellow">
+<tbody><tr> <td>
+
+<font color="blue">
+<b>
+<pre>      <font color="red">x<sub>LL</sub>(B) &#8804; x<sub>LL</sub>(A)</font>    and    <font color="red">y<sub>LL</sub>(B) &#8804; y<sub>LL</sub>(A)</font>     
+
+      <font color="red">x<sub>UR</sub>(A) &#8804; x<sub>UR</sub>(B)</font>    and    <font color="red">y<sub>UR</sub>(A) &#8804; y<sub>UR</sub>(B)</font>
+</pre>
+</b>
+</font>
+
+</td> </tr>
+</tbody></table>
+</ul>
+<p>
+<b>Graphically:</b>
+</p><p>
+</p><ul>
+<table border="5">
+
+<tbody><tr> <td>
+<img src="R-tree_files/R-tree07b.gif">
+</td> </tr>
+
+</tbody></table>
+</ul>
+<p>
+
+ </p></li></ul>
+
+</td> </tr>
+</tbody></table>
+</ul>
+<p>
+</p><hr>
+<hr>
+<p>
+</p></li><li> <b>Search algorithm</b> for
+       <font color="blue"><b>objects</b></font> in an
+       <font color="red"><b><i>R</i>-tree</b></font>:
+<p>
+</p><ul>
+<table border="5" bgcolor="lightcyan">
+<tbody><tr> <td>
+
+ <ul>
+ <li> Is <font color="blue"><b><i>similar</i></b></font> to
+     the <b>search algorithm</b> for
+     <font color="red"><b>points</b></font> using
+     the
+     <font color="blue"><b>containment relationship</b></font> for
+     <font color="red"><b>bounding boxes</b></font>.
+ </li></ul>
+
+</td> </tr>
+</tbody></table>
+</ul>
+<p>
+
+</p></li></ul>
+
+
+
+<p>
+</p><hr>
+<hr>
+<hr>
+<hr>
+<p>
+</p></li><li> <font color="darkmagenta"><b>
+     Insert Algorithm for the <i>R</i>-tree
+     </b></font>
+<p>
+</p><ul>
+<li> <b>Insert Algorithm</b> for an object
+     <font color="red"><b>ObjID</b></font>:
+<p>
+</p><p>
+</p><ul>
+<table border="5" bgcolor="#CCFFCC">
+<tbody><tr> <td>
+
+ <ul>
+ <li> The <font color="blue"><b>insert algorithm </b></font> is
+    <b><i>also</i></b>
+       <font color="red"><b><i>recursive</i></b></font>
+<p>
+</p><hr>
+<p>
+</p></li><li> The <b>insert</b> starts at the
+    <font color="red"><b><i>root</i> node</b></font> of
+    the <font color="blue"><b><i>R</i>-tree</b></font>
+ </li></ul>
+
+</td> </tr>
+</tbody></table>
+</ul>
+<p>
+</p><hr>
+<p>
+</p></li><li> <b>Recursive insert algorithm</b> for
+     an <font color="red"><b>Object ObjID</b></font>
+     with
+     <b>bounding box</b>
+     <font color="blue"><b>mbb</b></font> when the
+     <b>current node</b> is
+     <font color="red"><b>n</b></font>:
+<p>
+</p><p>
+</p><ul>
+<table border="5" bgcolor="lightcyan">
+<tbody><tr> <td>
+
+<font color="blue">
+<b>
+<pre>     <font color="darkgreen">/* ================================================
+        Insert( <font color="red">(mbb,ObjID)</font>, <font color="blue">n</font>)
+
+            <font color="red">(mbb,ObjID)</font> = object with given mbb
+	    <font color="blue">n</font>           = current node of operation
+        ================================================= */</font>
+     Insert( <font color="red">(mbb, ObjID)</font>, <font color="blue">n</font> )
+     {
+        // <font color="red">n</font> = <font color="red">current node</font> of the search in the R-tree
+
+	if ( <font color="red">n == internal node</font> )
+	{
+	   for ( <font color="red">each entry</font> ( BB,  <span style="BACKGROUND-COLOR: yellow"><font color="magenta">childptr</font></span> ) in node<font color="red"> n</font> ) do         
+	   {<font color="darkgreen">
+	      /* ======================================================
+	         Insert object in subtree if its mbb is contained by BB
+		 ====================================================== */</font>
+	      if ( <font color="red">mbb &#8838; BB</font> )
+	      {
+                 <img src="R-tree_files/R-tree08a.gif">
+
+		 /* ----------------------------------------------
+		    Insert the object in this subtree !!!
+		    ---------------------------------------------- */
+	         Insert( <font color="red">(mbb,ObjID)</font>,  <span style="BACKGROUND-COLOR: yellow"><font color="magenta">childptr</font></span>);   // Just recurse !!
+<font color="magenta">
+		 /* ----------------------------------------------
+		    The recursion WILL have inserted the object !
+		    ---------------------------------------------- */</font>
+		 return;           // Terminates the recursion !!!
+              }
+           }
+<font color="darkgreen">
+	   /* ****************************************************
+	      We can ONLY reach here when <font color="red">EVERY BB</font> in the node <font color="red">n</font>
+	      <font color="red">FAILS to contain</font> the object !!!
+	      **************************************************** */</font>
+	   Find a <font color="red">BB</font> in <font color="red">n</font> such that:
+	       <font color="red">Enlarging BB</font> to <font color="red">contain</font> the <font color="red">object</font> will add 
+	       the <span style="BACKGROUND-COLOR: yellow"><font color="red">least amount of area</font></span> to the bounding box BB
+
+               <img src="R-tree_files/R-tree08b.gif">
+
+           <font color="red">Update</font> this BB in <font color="red">n</font> by the <font color="red">Enlarged BB</font>;
+
+	   (<font color="red">Note:</font> We do <font color="red">not</font> need to update the <font color="red">BB in the parent node</font>
+	   because <font color="red">THAT BB</font> contains the insert object)
+
+	   /* ======================================================
+	      <font color="red">Now</font> the enlarged BB contains the object !!!
+	      ====================================================== */
+	   Insert( <font color="red">(mbb,ObjID)</font>,  <span style="BACKGROUND-COLOR: yellow"><font color="magenta">childptr</font></span>);   // Just recurse !!
+	}
+	else
+	{<font color="darkgreen">
+	   /* =================================================
+	      We found the <font color="red">leaf node</font> to hold the <font color="red">object</font> !!!
+	      ================================================= */</font>
+	   if ( leaf node <font color="red">has space</font> to hold object )
+	   {
+	      <font color="red">insert</font> (mbb, ObjID) in the leaf node;
+	   }
+	   else
+	   {
+	      <font color="red">Split the leaf node</font> into 2 nodes;  // Tough...
+
+	      Find the <font color="red">bounding box</font> for all the objects in each node;
+
+	      <font color="red">Replace</font> the parent's <font color="red">(1) BB</font> by of the <font color="red">2 bounding boxes</font>;
+
+	      (The parent node can <font color="red">overflow</font> and <font color="red">split</font>.
+	       You need a <font color="red">Insert procedure</font> into an <font color="red">internal node</font>
+	       - just like the <font color="red">B-tree</font> algorithm)
+
+	   }
+        }
+     }
+</pre>
+</b>
+</font>
+
+</td> </tr>
+</tbody></table>
+</ul>
+<p>
+</p></li></ul>
+<hr>
+<hr>
+<p>
+</p><hr>
+<hr>
+<hr>
+<hr>
+<p>
+</p></li><li> <font color="darkmagenta"><b>
+     Examples of the Insert Algorithm
+     </b></font>
+<p>
+</p><ul>
+
+<p>
+</p><li> <b>Insert example 1:</b>
+<p>
+</p><ul>
+<table border="5" bgcolor="lightyellow">
+<tbody><tr> <td>
+
+ <ul>
+ <li> Insert the <b>object</b> <font color="red"><b>x</b></font>
+       into the <font color="blue"><b><i>R</i>-tree</b></font>:
+<p>
+</p><ul>
+<table border="5">
+
+<tbody><tr> <td>
+<img src="R-tree_files/R-tree09a.gif">
+</td> </tr>
+
+</tbody></table>
+</ul>
+<p>
+
+ </p></li></ul>
+
+</td> </tr>
+</tbody></table>
+</ul>
+<p>
+<b>Steps</b> of the <font color="blue"><b>Insert Algorithm</b></font>:
+</p><p>
+</p><ul>
+<table border="5" bgcolor="#CCFFCC">
+<tbody><tr> <td>
+
+ <ul>
+ <li> The <font color="blue"><b><i>first</i> BB</b></font> contains
+      <font color="red"><b>x</b></font>:
+<p>
+</p><ul>
+<table border="5">
+
+<tbody><tr> <td>
+<img src="R-tree_files/R-tree09b.gif">
+</td> </tr>
+
+</tbody></table>
+</ul>
+<p>
+</p><hr>
+<p>
+</p></li><li> <b>Because </b> there is <font color="blue"><b>space</b></font> in
+   the <font color="red"><b>leaf node</b></font>,
+   we <font color="blue"><b>insert</b></font> the
+   <font color="red"><b>object x</b></font> there:
+
+<p>
+</p><ul>
+<table border="5">
+
+<tbody><tr> <td>
+<img src="R-tree_files/R-tree09c.gif">
+</td> </tr>
+
+</tbody></table>
+</ul>
+<p>
+ </p></li></ul>
+
+</td> </tr>
+</tbody></table>
+</ul>
+<p>
+</p><hr>
+<hr>
+<p>
+
+</p><p>
+</p></li><li> <b>Insert example 2:</b>
+<p>
+</p><ul>
+<table border="5" bgcolor="lightyellow">
+<tbody><tr> <td>
+
+ <ul>
+ <li> Insert the <b>object</b> <font color="red"><b>x</b></font>
+       into the <font color="blue"><b><i>R</i>-tree</b></font>:
+<p>
+</p><ul>
+<table border="5">
+
+<tbody><tr> <td>
+<img src="R-tree_files/R-tree10a.gif">
+</td> </tr>
+
+</tbody></table>
+</ul>
+<p>
+
+ </p></li></ul>
+
+</td> </tr>
+</tbody></table>
+</ul>
+<p>
+<b>Steps</b> of the <font color="blue"><b>Insert Algorithm</b></font>:
+</p><p>
+</p><ul>
+<table border="5" bgcolor="lightcyan">
+<tbody><tr> <td>
+
+ <ul>
+ <li> We <font color="red"><b>cannot</b></font> find 
+       <font color="blue"><b>any BB</b></font> that <b>contains</b>
+       the <font color="red"><b>object x</b></font>:
+<p>
+</p><ul>
+<table border="5">
+
+<tbody><tr> <td>
+<img src="R-tree_files/R-tree09b.gif">
+</td> </tr>
+
+</tbody></table>
+</ul>
+<p>
+</p><hr>
+<p>
+</p></li><li> We must 
+     <span style="BACKGROUND-COLOR: yellow">
+     <font color="blue"><b>augment</b></font>
+     </span>
+     one of the <font color="red"><b>BB</b></font> to
+     <font color="blue"><b>include</b></font>
+     the <font color="red"><b>object x</b></font>:
+
+<p>
+</p><ul>
+<table border="5">
+
+<tbody><tr> <td>
+<img src="R-tree_files/R-tree10c.gif">
+</td> </tr>
+
+</tbody></table>
+</ul>
+<p>
+<font color="red"><b>Note:</b></font>
+</p><p>
+</p><ul>
+<table border="5" bgcolor="#FFEEEE">
+<tbody><tr> <td>
+
+ <ul>
+ <li> The <font color="blue"><b>fact</b></font> that we are
+      <font color="red"><b>searching</b></font> in the
+      <b>current node</b> must <font color="blue"><b>mean</b></font>:
+<p>
+</p><ul>
+<table border="5" bgcolor="#CCFFCC">
+<tbody><tr> <td>
+
+ <ul>
+ <li> The <font color="red"><b>BB</b></font> in the
+         <font color="blue"><b>parent node</b></font> <b>contains</b>
+	 the <font color="red"><b>object x</b></font> !!!
+ </li></ul>
+
+</td> </tr>
+</tbody></table>
+</ul>
+<p>
+</p><hr>
+<p>
+</p></li><li> <b>Therefore:</b>
+<p>
+</p><ul>
+<table border="5" bgcolor="lightyellow">
+<tbody><tr> <td>
+
+ <ul>
+ <li> There is <font color="red"><b>no need</b></font> to
+     <font color="blue"><b>update</b></font> the
+     <font color="red"><b>BB</b></font> in the
+     <font color="blue"><b>parent node</b></font> !!!
+ </li></ul>
+
+</td> </tr>
+</tbody></table>
+</ul>
+<p>
+
+ </p></li></ul>
+
+</td> </tr>
+</tbody></table>
+</ul>
+<p>
+</p><hr>
+<p>
+</p></li><li> We can <font color="blue"><b>insert</b></font>
+   the <font color="red"><b>object x</b></font> in the
+   <b>leaf node</b>:
+<p>
+</p><ul>
+<table border="5">
+
+<tbody><tr> <td>
+<img src="R-tree_files/R-tree10d.gif">
+</td> </tr>
+
+</tbody></table>
+</ul>
+<p>
+<b>Result:</b>
+</p><p>
+</p><ul>
+<table border="5">
+
+<tbody><tr> <td>
+<img src="R-tree_files/R-tree10e.gif">
+</td> </tr>
+
+</tbody></table>
+</ul>
+<p>
+ </p></li></ul>
+
+</td> </tr>
+</tbody></table>
+</ul>
+<p>
+
+
+</p><hr>
+<hr>
+<p>
+
+</p><p>
+</p></li><li> <b>Insert example 3:</b>
+<p>
+</p><ul>
+<table border="5" bgcolor="lightyellow">
+<tbody><tr> <td>
+
+ <ul>
+ <li> Insert the <b>object</b> <font color="red"><b>x</b></font>
+       into the <font color="blue"><b><i>R</i>-tree</b></font>:
+<p>
+</p><ul>
+<table border="5">
+
+<tbody><tr> <td>
+<img src="R-tree_files/R-tree11a.gif">
+</td> </tr>
+
+</tbody></table>
+</ul>
+<p>
+
+ </p></li></ul>
+
+</td> </tr>
+</tbody></table>
+</ul>
+<p>
+<b>Steps</b> of the <font color="blue"><b>Insert Algorithm</b></font>:
+</p><p>
+</p><ul>
+<table border="5" bgcolor="lightcyan">
+<tbody><tr> <td>
+
+ <ul>
+ <li> We find a
+       <font color="blue"><b>BB</b></font> that <b>contains</b>
+       the <font color="red"><b>object x</b></font>:
+<p>
+</p><ul>
+<table border="5">
+
+<tbody><tr> <td>
+<img src="R-tree_files/R-tree11b.gif">
+</td> </tr>
+
+</tbody></table>
+</ul>
+<p>
+<font color="red"><b>However</b></font>, the
+  <font color="blue"><b>leaf node</b></font> is
+  <font color="red"><b>full</b></font>:
+</p><p>
+</p><ul>
+<table border="5" bgcolor="lightyellow">
+<tbody><tr> <td>
+
+ <ul>
+ <li> We <font color="blue"><b>partition</b></font> the
+    <b>objects</b> into
+    <font color="red"><b>2 groups</b></font>
+ </li></ul>
+
+</td> </tr>
+</tbody></table>
+</ul>
+<p>
+
+</p><hr>
+<p>
+</p></li><li> <b>Suppose</b> we <font color="blue"><b>partition</b></font>
+      the <b>objects</b> as
+      <font color="red"><b>follows</b></font>:
+
+<p>
+</p><ul>
+<table border="5">
+
+<tbody><tr> <td>
+<img src="R-tree_files/R-tree11c.gif">
+</td> </tr>
+
+</tbody></table>
+</ul>
+<p>
+
+</p><p>
+</p><hr>
+<p>
+</p></li><li> The <font color="blue"><b>new</b></font>
+   <font color="red"><b><i>R</i>-tree</b></font> is then:
+<p>
+</p><ul>
+<table border="5">
+
+<tbody><tr> <td>
+<img src="R-tree_files/R-tree11d.gif">
+</td> </tr>
+
+</tbody></table>
+</ul>
+<p>
+ </p></li></ul>
+
+</td> </tr>
+</tbody></table>
+</ul>
+
+<p>
+
+</p></li></ul>
+
+<p>
+</p><hr>
+<hr>
+<hr>
+<hr>
+<p>
+</p></li><li> <font color="darkmagenta"><b>
+     Note on <i>how</i> to partition objects in an overflow (leaf) node
+     </b></font>
+<p>
+</p><ul>
+<li> <b>Suppose</b> a <font color="blue"><b>leaf node</b></font> 
+       contains the
+       following <font color="red"><b>objects</b></font>:
+<p>
+</p><ul>
+<table border="5">
+
+<tbody><tr> <td>
+<img src="R-tree_files/R-tree12a.gif">
+</td> </tr>
+
+</tbody></table>
+</ul>
+<p>
+</p><hr>
+<hr>
+<p>
+</p></li><li> We <font color="blue"><b>insert</b></font> the following
+       <font color="red"><b>object</b></font>:
+<p>
+</p><ul>
+<table border="5">
+
+<tbody><tr> <td>
+<img src="R-tree_files/R-tree12b.gif">
+</td> </tr>
+
+</tbody></table>
+</ul>
+<p>
+</p><hr>
+<hr>
+<p>
+</p></li><li> The <font color="blue"><b>node</b></font> is now
+       <font color="red"><b>overflow</b></font> and we
+       want to
+       <font color="blue"><b>split</b></font> the
+       <b>objects</b> into
+       <font color="red"><b>2 groups</b></font>.
+<p>
+  <font color="red"><b>How</b></font> should the
+  <b>objects</b> be <font color="blue"><b>split</b></font> ????
+</p><p>
+</p><ul>
+<table border="5" bgcolor="lightyellow">
+<tbody><tr> <td>
+
+ <ul>
+ <li> An <font color="blue"><b>obvious</b></font> choice is:
+<p>
+</p><ul>
+<table border="5">
+
+<tbody><tr> <td>
+<img src="R-tree_files/R-tree12c.gif">
+</td> </tr>
+
+</tbody></table>
+</ul>
+<p>
+</p><hr>
+<p>
+</p></li><li> A <font color="red"><b><i>not</i> so obvious</b></font> choice is:
+<p>
+</p><ul>
+<table border="5">
+
+<tbody><tr> <td>
+<img src="R-tree_files/R-tree12d.gif">
+</td> </tr>
+
+</tbody></table>
+</ul>
+<p>
+This is a <font color="blue"><b>superior split</b></font> because:
+</p><p>
+</p><ul>
+<table border="5" bgcolor="lightcyan">
+<tbody><tr> <td>
+
+ <ul>
+ <li> The <font color="red"><b>total area</b></font> of
+     the <font color="blue"><b>bounding box</b></font> is
+     <font color="red"><b><i>smaller</i></b></font>
+ </li></ul>
+
+</td> </tr>
+</tbody></table>
+</ul>
+<p>
+
+ </p></li></ul>
+
+</td> </tr>
+</tbody></table>
+</ul>
+<p>
+
+</p></li></ul>
+
+<p>
+</p><hr>
+<hr>
+<hr>
+<hr>
+<p>
+</p></li><li> <font color="darkmagenta"><b>
+     A naive object partitioning algorithm
+     </b></font>
+<p>
+</p><ul>
+<li> <b>Problem description:</b>
+<p>
+</p><ul>
+<table border="5" bgcolor="#FFEEEE">
+<tbody><tr> <td>
+
+ <ul>
+ <li> <b>Given</b> a set of <font color="red"><b>n</b></font>
+    <b>objects</b>
+<p>
+</p><hr>
+<p>
+ </p></li><li> Find the <font color="blue"><b>partitioning</b></font>
+     of the <font color="red"><b>n</b></font>
+     <b> objects</b>
+    into 
+    <font color="blue"><b>2 groups A and B</b></font> such that:
+<p>
+</p><ul>
+<table border="5" bgcolor="lightyellow">
+<tbody><tr> <td>
+
+<font color="blue">
+<b>
+<pre>    <font color="red">AreaOfMBB</font>(objects in A) + <font color="red">AreaOfMBB</font>(objects in B) = <font color="red">minimal  </font>   
+</pre>
+</b>
+</font>
+
+</td> </tr>
+</tbody></table>
+</ul>
+<p>
+
+        
+
+ </p></li></ul>
+
+</td> </tr>
+</tbody></table>
+</ul>
+<p>
+
+</p></li><li> <b>Naive Algorithm:</b>
+<p>
+</p><ul>
+<table border="5" bgcolor="lightcyan">
+<tbody><tr> <td>
+
+<font color="blue">
+<b>
+<pre>    S = all possible <font color="red">subsets</font> of {1 , 2, 3,...., n};
+
+    <font color="red">s<sub>1</sub></font> &#8712; S;
+    best_A = s<sub>1</sub>
+    best_B = {1,2,3,...,n} - s;
+    <font color="red">minArea</font> = AreaOfBB(objects in A) + AreaOfBB(objects in B);
+
+    for ( each subset s &#8712; S - s<sub>1</sub> ) do
+    {
+       A = s;
+       B = {1,2,3,...,n} - s;
+
+       <font color="red">Area</font> = AreaOfBB(objects in A) + AreaOfBB(objects in B);     
+
+       if ( <font color="red">Area &lt; minArea</font> )
+       {
+          best_A = A;
+	  best_B = B;
+       }
+    }
+</pre>
+</b>
+</font>
+
+</td> </tr>
+</tbody></table>
+</ul>
+<p>
+</p><hr>
+<hr>
+<p>
+</p></li><li> <font color="blue"><b>Apparently</b></font>, there exists a
+      <font color="red"><b>O(n<sup>2</sup>)</b></font>
+      <b> algorithm</b>
+      to find the
+      <font color="blue"><b>best partitioning</b></font>....
+ <p>
+   (Don't know it and this topic is
+   <font color="blue"><b>outside</b></font> the
+   <b>scope</b> of the course)
+
+</p></li></ul>
+
+
+
+<p>
+</p></li></ul>
+<p>
+</p><hr>
+<hr>
+<hr>
+<hr>
+
+</body></html>
