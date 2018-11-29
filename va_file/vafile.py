@@ -1,4 +1,5 @@
-import numpy
+import numpy as np
+
 
 class VaFile:
 
@@ -7,7 +8,7 @@ class VaFile:
             # features ==> N*d numpy array
             # b ==> number of bits
         # get dimensions from the features
-        N, d = features.size
+        N, d = features.shape
         # b = b_sub_i * d
         b_sub_i = b / d
         """
@@ -17,11 +18,13 @@ class VaFile:
         """
         return True
 
-    def initcandidate():
+    def initcandidate(feature_approximation):
+        # this function returns nth largest upper bound encountered so far
         maxint = 0
-        """
-        to_do:
-        """
+        N, d = feature_approximation.shape
+        for k in range(N):
+            if(feauture_approximation[k] >= maxint):
+                maxint = feauture_approximation[k]
         return maxint
 
     def candidate():
