@@ -1,21 +1,24 @@
 import numpy as np
 from rtree import RTree
-from node import Node 
+from node import Node
+import time
 
 
+start_time = time.time()
 
-tree = RTree(10,5)
-tree.insert([1,2,3,4,5],420)
-tree.insert([6,6,6,6,6],69)
-tree.insert([6,6,6,6,6],69)
-tree.insert([6,6,6,6,6],69)
-tree.insert([6,6,6,6,6],69)
-tree.insert([6,6,6,6,6],69)
-tree.insert([6,6,6,6,6],69)
-tree.insert([6,6,6,6,6],69)
-tree.insert([6,6,6,6,6],69)
-tree.insert([6,6,6,6,6],69)
-tree.insert([7,7,7,7,7],69)
-print(tree.root.BBs)
-print(tree.root.objects)
-print(tree.root.size)
+n = 50000
+dim = 10
+per_page = 8000//(10*2*4 + 4)
+print(per_page, 'entries per page')
+
+tree = RTree(per_page,dim)
+
+for i in range(50000):
+    tree.insert(np.random.rand(dim),i)
+
+print(time.time() - start_time, 'seconds')
+
+
+#print(tree.root)
+
+
