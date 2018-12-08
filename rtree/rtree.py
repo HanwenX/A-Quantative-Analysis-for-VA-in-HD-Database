@@ -1,3 +1,4 @@
+import random
 import numpy as np 
 from node import Node
 from point import Point
@@ -8,6 +9,7 @@ class RTree:
         self.p = p
         self.root = Node(None, is_leaf=True, max_size=elements_per_node, data_dim=data_dim, min_frac=min_frac, tree=self)
         self.reinsert_level = 1
+        random.seed(0)
 
     def insert_batch(self, data, rids):
         for coords, rid in zip(data,rids):
@@ -20,15 +22,17 @@ class RTree:
     @staticmethod
     def insert_point(node, p):
         if not node.is_leaf:
-            for child in node.objects[:node.size]:
-                if bb_contain(child.mbb, p.mbb):
-                    RTree.insert_point(child, p)
-                    return
+
+            # for child in random.shuffle(node.objects[:node.size]):
+            #     if bb_contain(child.mbb, p.mbb):
+            #         RTree.insert_point(child, p)
+            #         return
+            
             # gets here if there was no box to put the point in
-            # find the child of node which neadsto expand the least to hold mbb
-            best_child, new_bb = node.minimal_expand(p.mbb)
+            # find the child of node which neads to expand the least to hold mbb
+            best_child = node.minimal_expand(p.mbb)
             RTree.insert_point(best_child, p)
-            best_child.mbb = new_bb
+            return
 
         elif node.is_leaf:
             node.insert(p)
@@ -41,14 +45,15 @@ class RTree:
         leaves= sorted(leaves, key=lambda x : max_dist(x.mbb, q))
         num_leaves_visited = 0
         for leaf in leaves:
-            num_leaves_visited += 1
             leaf_min_dist = min_dist(leaf.mbb, q)
             if leaf_min_dist > nnk_dist:
-                break
+                continue
+            num_leaves_visited += 1
             objs = sorted(leaf.objects[:leaf.size], key=lambda x : dist(x, q))
             neighbors.extend(objs[:k])
             neighbors = sorted(neighbors, key=lambda x : dist(x, q))[:k]
             nnk_dist = dist(neighbors[-1], q)
+        # dists = [dist(x, q) for x in neighbors]
         return neighbors, num_leaves_visited
 
     def get_leaves(self):

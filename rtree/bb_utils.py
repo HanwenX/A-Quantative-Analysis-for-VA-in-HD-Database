@@ -40,6 +40,8 @@ def bb_list_merge(bb_list):
 
 # computes minimum distanc from a query point to a bounding box
 def min_dist(bb, point):
+    if point_contain(bb, point):
+        return 0.0
     widths = bb[1,:] - bb[0,:]
     centers = (bb[1,:] + bb[0,:])/2
     ds = np.maximum(np.abs(centers-point) - widths/2,0)

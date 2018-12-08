@@ -44,6 +44,7 @@ class Node:
     # finds the child with minimally expanded bbox
     def minimal_expand(self, mbb):
         min_diff = np.inf
+        min_area = np.inf
         best_child = None
         best_bbox = None
         for child in self.objects[:self.size]:
@@ -52,11 +53,12 @@ class Node:
             new_bbox = bb_list_merge([BB,mbb])
             area_after = bb_area(new_bbox)
             diff = area_after - area_before
-            if diff < min_diff:
+            if (diff <= min_diff) and (area_before < min_area):
                 min_diff = diff
+                min_area = area_before
                 best_child = child
                 best_bbox = new_bbox
-        return best_child, new_bbox
+        return best_child
 
     # adds obj to self node
     # obj is an rid for leaves, a node for internal nodes
@@ -136,7 +138,7 @@ class Node:
         # choose split axis:
         for axis in range(self.data_dim):
             # two different ways of sorting, lexsort faster when more things per page
-            data = mbbs[np.lexsort(np.flip(mbbs[:,:,axis],axis=0).T, axis=0)]
+            data = mbbs[np.lexsort(np.flip(mbbs[:,:,axis],axis=1).T, axis=0)]
             #data = np.array(sorted(mbbs, key=lambda x : (x[0,axis], x[1,axis])))
             S = 0.0
             for k in range(self.max_size - 2*self.min_size):
@@ -152,8 +154,12 @@ class Node:
 
         best_k = None
         best_overlap = np.inf
-        data_indices = np.lexsort(np.flip(mbbs[:,:,best_axis],axis=0).T, axis=0)
+        data_indices = np.lexsort(np.flip(mbbs[:,:,best_axis],axis=1).T, axis=0)
         data = mbbs[data_indices]
+
+        # print('best_axis:', best_axis)
+        # print('data:', data)
+
         for k in range(self.max_size - 2*self.min_size + 2):
             left = data[:self.min_size+k,:,:]
             right = data[self.min_size+k:,:,:]
