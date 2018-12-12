@@ -7,3 +7,7 @@ def knn(data, q, k):
     nn_indexes = sorted_indexes[:k]
     nn_dists = dists[nn_indexes]
     return nn_indexes, nn_dists
+
+
+
+

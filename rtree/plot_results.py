@@ -5,7 +5,8 @@ import matplotlib.pyplot as plt
 
 
 # data = np.genfromtxt('data/rtree_real.csv', delimiter=',')
-data = np.genfromtxt('data/rtree_synthetic.csv', delimiter=',')
+#data = np.genfromtxt('data/rtree_synthetic.csv', delimiter=',')
+data = np.genfromtxt('data/rtree_gmm.csv', delimiter=',')
 
 if len(data.shape) == 1:
     data = np.expand_dims(data,0)

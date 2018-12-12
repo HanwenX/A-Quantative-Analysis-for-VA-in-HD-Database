@@ -49,3 +49,35 @@ def extract_lbp_feature(data, n):
     return features
 
 
+
+def get_means(data, k):
+    mean = np.mean(data, axis=0)
+    dists = np.sqrt(np.sum(np.power(data-mean,2), axis=1))
+    furthest = data[np.argmax(dists),:]
+    means = [furthest]
+    for i in range(k-1):
+        mean = np.mean(means, axis=0)
+        dists = np.sqrt(np.sum(np.power(data-mean,2), axis=1))
+        furthest = data[np.argmax(dists),:]
+        means.append(furthest)
+    return np.array(means)
+
+
+def cluster_data(num_points, dim, k, var=0.01):
+    np.random.seed(1)
+
+    candidate_means = np.random.rand(1000000,45)[:,:dim]
+    means = get_means(candidate_means, k)
+
+    noise_cov = np.eye(dim) * var
+    noise_mean = np.zeros(dim)
+    
+
+    noise = np.random.multivariate_normal(noise_mean, noise_cov, num_points)
+
+    num_per_cluster = num_points // k
+    data = np.vstack([np.repeat(means[i][np.newaxis,:], num_per_cluster, axis=0) for i in range(k)])
+    data = data + noise
+    data = np.clip(data, a_min=0, a_max=1)
+    np.random.shuffle(data)
+    return data
